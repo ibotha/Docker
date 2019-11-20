@@ -1,0 +1,7 @@
+FROM alpine
+
+RUN apk update && apk upgrade && apk add vim
+
+ENTRYPOINT [ "vim" ]
+# docker builder build --tag ex00
+# docker run -it --rm ex00
