@@ -2,7 +2,19 @@ FROM		debian
 
 ENV			TS3DIR=/opt/teamspeak
 
-RUN			apt-get update && apt-get upgrade -y && apt-get install bzip2 wget apt-utils ca-certificates locales -y  && locale-gen en_ZA.UTF-8 && rm -rf /var/lib/apt/lists/* && wget https://files.teamspeak-services.com/releases/server/3.9.1/teamspeak3-server_linux_amd64-3.9.1.tar.bz2 -O /tmp/teamspeak.tar.bz2 && tar jxf /tmp/teamspeak.tar.bz2 -C /opt && mv /opt/teamspeak3-server_* ${TS3DIR} && rm /tmp/teamspeak.tar.bz2 && rm -rf /var/lib/apt/lists/* && groupadd -g 503 teamspeakadmin && useradd -u 503 -g 503 -d ${TS3DIR} teamspeakadmin && mkdir /data && chown -R teamspeakadmin:teamspeakadmin ${TS3DIR} /data
+RUN			apt-get update
+RUN         apt-get upgrade -y
+RUN         apt-get install bzip2 wget apt-utils ca-certificates locales -y
+RUN         rm -rf /var/lib/apt/lists/*
+RUN         wget https://files.teamspeak-services.com/releases/server/3.9.1/teamspeak3-server_linux_amd64-3.9.1.tar.bz2 -O /tmp/teamspeak.tar.bz2
+RUN         tar jxf /tmp/teamspeak.tar.bz2 -C /opt
+RUN         mv /opt/teamspeak3-server_* ${TS3DIR}
+RUN         rm /tmp/teamspeak.tar.bz2
+RUN         rm -rf /var/lib/apt/lists/*
+RUN         groupadd -g 503 teamspeakadmin
+RUN         useradd -u 503 -g 503 -d ${TS3DIR} teamspeakadmin
+RUN         mkdir /data
+RUN         chown -R teamspeakadmin:teamspeakadmin ${TS3DIR} /data
 
 ENV			TS3SERVER_LICENSE=accept
 
