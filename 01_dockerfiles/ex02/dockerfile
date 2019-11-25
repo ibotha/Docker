@@ -1,0 +1,22 @@
+FROM ruby:latest
+
+RUN apt update -y
+RUN apt upgrade -y
+RUN gem install rails
+RUN mkdir -p /opt/app
+
+ONBUILD WORKDIR /opt/app
+
+ONBUILD ADD . /opt/app
+
+ONBUILD EXPOSE 3000
+
+ONBUILD RUN	bundle install --without production && rails db:migrate && rails db:seed && rails test
+
+# docker build -t ft-rails:on-build <dir>
+# git clone https://github.com/mhartl/hello_app_original.git sample_app
+# echo "FROM\tft-rails:on-build\n\nEXPOSE\t3000\n\nCMD\t[\"rails\", \"s\", \"-b\", \"0.0.0.0\", \"-p\", \"3000\"]" > sample_app/Dockerfile
+## comment out last line of Gemfile
+## set check_yarn_integrity to 'false' in sample_app/config/webpacker.yml
+# docker build <sample app dir> -t wtf
+# docker run --rm -p 3000:3000 wtf

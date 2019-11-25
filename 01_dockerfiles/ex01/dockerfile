@@ -2,7 +2,7 @@ FROM		debian
 
 ENV			TS3DIR=/opt/teamspeak
 
-RUN			apt-get update
+RUN			apt-get update -y
 RUN         apt-get upgrade -y
 RUN         apt-get install bzip2 wget apt-utils ca-certificates locales -y
 RUN         rm -rf /var/lib/apt/lists/*
